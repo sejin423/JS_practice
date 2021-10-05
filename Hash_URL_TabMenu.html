@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>탭 메뉴 만들기</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Travel</h1>
+    <div class="tabs">
+        <ul>
+            <li><a href="#czech">CZECH</a></li>
+            <li><a href="#germany">GERMANY</a></li>
+            <li><a href="#british">BRITISH</a></li>
+        </ul>
+        <div class="tab_content">
+            <div id="czech">
+                <h3>czech</h3>
+                <p>beautiful place</p>
+            </div>
+            <div id="germany">
+                <h3>germany</h3>
+                <p>famous beer</p>
+            </div>
+            <div id="british">
+                <h3>british</h3>
+                <p>westnorth in europe</p>
+            </div>
+        </div>
+    </div>
+<script>
+    function createTabs(selector){
+        const el = document.querySelector(selector);
+        const liEls = el.querySelectorAll('ul li');
+        const tabContentE1 = el.querySelector('.tab_content');
+        const firstTabEl = liEls.item(0).firstTabElementChild
+
+        function activate(target){
+            const hash = target.hash;
+            const anchors = target.closest('ul').querySelectorAll('li a');
+
+            Array.from(anchors).forEach(v => v.className = '');
+            Array.from(tabContentE1.children).forEach(v => v.style.display = 'none');
+            tabContentE1.querySelector(hash).style.display = '';
+            target.className = 'active';
+        }
+
+        const handleHash = () =>{
+            if (location.hash){
+                const selector = `a[href="${location.hash}"`;
+                activate(document.querySelector(selector));
+            } else{
+                activate(firstTabEl);
+            }
+        }
+
+        window.addEventListener('hashchange', handleHash);
+
+        handleHash();
+    }
+    createTabs('.tabs');
+</script>
+</body>
+</html>
